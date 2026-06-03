@@ -250,6 +250,125 @@
     }
     .tab-btn:hover { color: var(--tx2); }
     .tab-btn.active { color: var(--tx1); }
+
+    /* search box in tabs bar */
+    .search-wrap {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 6px;
+      flex-shrink: 0;
+    }
+    .search-icon-btn {
+      flex-shrink: 0;
+      background: none; border: none; cursor: pointer;
+      padding: 5px 6px;
+      color: var(--tx3);
+      transition: color .22s ease;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 6px;
+    }
+    .search-icon-btn:hover { color: var(--tx1); }
+    .search-icon-btn svg { display: block; }
+    .search-input {
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--br);
+      border-radius: 8px;
+      color: var(--tx1);
+      font-family: var(--sans);
+      font-size: 12.5px;
+      padding: 5px 26px 5px 10px;
+      width: 0;
+      max-width: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: max-width .35s cubic-bezier(.16,1,.3,1), opacity .3s ease, border-color .22s ease, background .22s ease;
+      outline: none;
+      caret-color: var(--ac-tl);
+    }
+    .search-input::placeholder { color: var(--tx3); }
+    .search-input:focus {
+      border-color: rgba(99,102,241,.45);
+      background: rgba(99,102,241,.06);
+    }
+    .search-wrap.open .search-input {
+      max-width: 180px;
+      width: 180px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* mobile toggle only shows on small screens; desktop toggle only on large */
+    .mobile-search-toggle { display: none; }
+    @media (max-width: 600px) {
+      .mobile-search-toggle { display: flex; }
+      .search-wrap .search-icon-btn:not(.mobile-search-toggle) { display: none; }
+    }
+    @media (min-width: 601px) {
+      .mobile-search-toggle { display: none !important; }
+    }
+
+    /* Mobile: search drops to its own full-width row */
+    @media (max-width: 600px) {
+      .tabs-bar {
+        flex-wrap: wrap;
+        padding-bottom: 0;
+      }
+      .search-wrap {
+        order: 3;
+        margin-left: 0;
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        visibility: hidden;
+        padding: 0;
+        transition: max-height .32s cubic-bezier(.16,1,.3,1),
+                    opacity .25s ease,
+                    visibility .25s ease,
+                    padding .32s ease;
+      }
+      .search-wrap.open {
+        max-height: 50px;
+        opacity: 1;
+        visibility: visible;
+        padding: 6px 0 8px;
+      }
+      .search-wrap .search-icon-btn { display: none; }
+      .search-input {
+        width: 100% !important;
+        max-width: 100% !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        font-size: 14px;
+        padding: 7px 32px 7px 12px;
+      }
+      .search-clear {
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+    .search-clear {
+      flex-shrink: 0;
+      background: none; border: none; cursor: pointer;
+      color: var(--tx3); font-size: 12px; line-height: 1;
+      padding: 3px 4px;
+      display: none;
+      transition: color .22s ease;
+      border-radius: 4px;
+    }
+    .search-wrap.has-value .search-clear { display: flex; align-items: center; }
+    .search-clear:hover { color: var(--tx1); }
+    .search-no-results {
+      padding: 48px 24px; text-align: center;
+      color: var(--tx3); font-size: 14px;
+      border: 1px dashed var(--br); border-radius: var(--r);
+      display: none;
+    }
     /* active underline */
     .tab-btn.active::after {
       content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px;
@@ -833,7 +952,26 @@ document.getElementById('app').innerHTML = `
         Quick Updates
         <span class="tab-count">${UPDATES.length}</span>
       </button>
+      <!-- desktop search toggle (inside wrap) + mobile toggle (always visible in row) -->
+      <button class="search-icon-btn mobile-search-toggle" id="mobileSearchToggle" aria-label="Search" style="margin-left:auto;flex-shrink:0;">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6.5" cy="6.5" r="5"/>
+          <line x1="10.5" y1="10.5" x2="15" y2="15"/>
+        </svg>
+      </button>
+      <div class="search-wrap" id="searchWrap">
+        <button class="search-icon-btn" id="searchToggle" aria-label="Search">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="6.5" cy="6.5" r="5"/>
+            <line x1="10.5" y1="10.5" x2="15" y2="15"/>
+          </svg>
+        </button>
+        <input class="search-input" id="searchInput" type="text" placeholder="Search projects…" autocomplete="off" spellcheck="false">
+        <button class="search-clear" id="searchClear" aria-label="Clear">✕</button>
+      </div>
     </div>
+
+    <div class="search-no-results" id="searchNoResults">No projects match your search.</div>
 
     <div class="tab-panel active" id="tab-projects">
       <div class="proj-grid">${PROJECTS.map(card).join('')}</div>
@@ -893,6 +1031,66 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
 
 document.querySelectorAll('.proj-card, .upd-card, .date-group').forEach(el => observer.observe(el));
+
+/* ── SEARCH ── */
+const searchWrap  = document.getElementById('searchWrap');
+const searchInput = document.getElementById('searchInput');
+const searchClear = document.getElementById('searchClear');
+const searchToggle= document.getElementById('searchToggle');
+const noResults   = document.getElementById('searchNoResults');
+
+/* on mobile the icon lives outside the wrap in the tabs bar */
+document.getElementById('mobileSearchToggle')?.addEventListener('click', toggleSearch);
+searchToggle.addEventListener('click', toggleSearch);
+
+function toggleSearch() {
+  const isOpen = searchWrap.classList.toggle('open');
+  if (isOpen) {
+    setTimeout(() => searchInput.focus(), 50);
+  } else {
+    clearSearch();
+  }
+}
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  searchWrap.classList.toggle('has-value', q.length > 0);
+  filterProjects(q);
+  if (!q) collapseSearch();
+});
+
+searchClear.addEventListener('click', () => {
+  collapseSearch();
+});
+
+searchInput.addEventListener('keydown', e => {
+  if (e.key === 'Escape') collapseSearch();
+});
+
+function collapseSearch() {
+  searchInput.value = '';
+  searchWrap.classList.remove('has-value', 'open');
+  searchInput.blur();
+  filterProjects('');
+}
+
+function filterProjects(q) {
+  const cards = document.querySelectorAll('#tab-projects .proj-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    const match = !q || text.includes(q);
+    card.style.display = match ? '' : 'none';
+    if (match) visible++;
+  });
+  noResults.style.display = (q && visible === 0) ? 'block' : 'none';
+}
+
+function clearSearch() {
+  searchInput.value = '';
+  searchWrap.classList.remove('has-value');
+  filterProjects('');
+}
 </script>
 </body>
 </html>

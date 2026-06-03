@@ -385,74 +385,52 @@
 ═══════════════════════════════════════════════ */
 const PROJECTS = [
 
-  /* ── Jun 4 ─────────────────────────────────── */
+  /* ── Priority (top) ─────────────────────────── */
   { id:'sierra-leone-kms',   name:'Sierra Leone KMS',                        status:'upcoming', deadline:'Meeting: Jul 4, 2026',
     note:{ date:'Jun 3, 2026',  text:'We have developed a mock website based on the documented requirements. We will present it to the CT Marketing team and ask them to verify whether any requirements have been missed. The goal is to engage stakeholders early, showcase our capabilities, and increase our chances of securing the project.' }},
 
-  { id:'mutual-trust-vapt',  name:'Mutual Trust Bank - VAPT',                status:'upcoming', deadline:'Accounts by Jun 4, 2026',
-    note:{ date:'May 12, 2026', text:'The CT Marketing team will provide two bank accounts for VAPT. Once the accounts are received, we will start working on the project.' }},
-
-  /* ── Jun 8-10 ───────────────────────────────── */
-  { id:'omnimage',           name:'omnimage.ai',                             status:'active',   deadline:'Demo: Jun 8-10, 2026',
-    note:{ date:'Jun 3, 2026',  text:'Demo scheduled for Jun 8-10. We will present the image-to-video generation process. If TKCL MT approves, we will deploy it live.' }},
-
-  /* ── Jun 15 ─────────────────────────────────── */
-  { id:'city-bank-vapt',     name:'City Bank - VAPT',                        status:'security', deadline:'Internal deadline: Jun 15, 2026',
-    note:{ date:'Jun 2, 2026',  text:'The CT Marketing team is preparing presentation for City Bank. We have completed our technical findings, and the current focus is on presenting them clearly. Technical implementation will begin once the project is approved.' }},
-
-  /* ── Jun 19 ─────────────────────────────────── */
-  { id:'vlm-ood-paper',      name:'ECCV 2026 - VLM OOD Generalization',                  status:'research', deadline:'Notification: Jun 19, 2026',
-    note:{ date:'May 14, 2026', text:'Submitted "Step-Level Visual Grounding Faithfulness Predicts Out-of-Distribution Generalization in Long-Horizon Vision-Language Models" to ECCV 2026 (A* Conference). Awaiting review results.' }},
-
-  /* ── Jun 24 ─────────────────────────────────── */
   { id:'multimodal-llm',     name:'Multimodal LLM Development',              status:'active',   deadline:'Roadmap Demo: Jun 24, 2026',
-    note:{ date:'Jun 3, 2026',  text:'Roadmap demonstration scheduled for Jun 24, 2026. We will show everything from planning to execution.' }},
+    note:{ date:'Jun 3, 2026',  text:'A roadmap demonstration is scheduled for June 24, 2026. As discussed in the last meeting, we plan to develop and train our own LLM to support multiple platforms. So, we will present the entire roadmap, from planning to execution.' }},
 
-  /* ── Jul 1 ──────────────────────────────────── */
-  { id:'ktm-hrms',           name:'KTM - HR Leave Management System',        status:'live',     deadline:'Full go-live: Jul 1, 2026',
-    note:{ date:'May 24, 2026', text:'The Leave Management Module has already been deployed for management. By Jun 10, all production teams will be trained by the Tech and HR teams. From Jul 1, 2026, it will be used across the whole office.' }},
-
-  /* ── Jul 9 ──────────────────────────────────── */
   { id:'virtual-tryon',      name:'Virtual Try-On',                          status:'active',   deadline:'First Release: Jul 9, 2026',
     note:{ date:'Jun 2, 2026',  text:'Based on a sample of 1,070 websites, the crawler works on around 50-60% of e-commerce sites. Some major brands, such as Adidas, are not supported yet, but we will address them in Phase-2. For now, our focus is on launching Phase 1 with the full end-to-end process.' }},
 
-  { id:'emnlp-2026',         name:'EMNLP 2026 - AI Safety & Security',       status:'research', deadline:'Review notification: Jul 9, 2026',
-    note:{ date:'May 14, 2026', text:'A fundamental research paper on AI safety and security has been submitted to the EMNLP (A*) Conference. Paper: "Long Thoughts, Short Refusals: Math-Encoded Jailbreaks on Reasoning-Model Sibling Pairs".' }},
+  { id:'belk-ai-audit',      name:'AI Auditing Tool',                        status:'upcoming', deadline:'Pending project approval', client:'BELK',
+    note:{ date:'Jun 3, 2026',  text:'During the testing phase, we developed shear garment and tattoo detection features. There are still several discussions and requirement clarifications pending. We will move forward once the project is approved.' }},
 
-  /* ── Jul 10 ─────────────────────────────────── */
-  { id:'ktm-attendance',     name:'KTM - HR Attendance Management System',   status:'upcoming', deadline:'Jul 10, 2026',
-    note:{ date:'May 24, 2026', text:'Biometric devices will be integrated with KTM. Employees will be able to track their average daily working hours and total monthly working hours. Due to limited resources, this feature will be released after the leave application feature.' }},
+  { id:'omnimage',           name:'omnimage.ai',                             status:'active',   deadline:'Demo: Jun 8-10, 2026',
+    note:{ date:'Jun 3, 2026',  text:'Demo scheduled for Jun 8-10. We will present the image-to-video generation process. If TKCL MT approves, we will deploy it live.' }},
 
-  /* ── Jul 15 ─────────────────────────────────── */
-  { id:'agentic-ai',         name:'Agentic AI Platform',                     status:'active',   deadline:'Jul 15, 2026',
-    note:{ date:'Jun 3, 2026',  text:'Website will be designed and hosted at rayyanmustaqbil.xyz. Clients will use the site to contact us for building AI agents and agentic AI workflows for their business.' }},
-
-  /* ── Aug 30 ─────────────────────────────────── */
-  { id:'icdar-2026',         name:'ICDAR 2026 - Diagram Hallucinations',     status:'research', deadline:'Aug 30 - Sep 2, 2026 · Vienna, Austria',
-    note:{ date:'May 14, 2026', text:'We will present "Stroke-Level Connectivity Verification: Grounding Vision-Language Models Against Topology Hallucination in Diagram Understanding" at ICDAR 2026 in Vienna, Austria. Currently refining the paper and preparing the presentation.' }},
-
-  /* ── Live / No fixed deadline ───────────────── */
-  { id:'nexus-academy',      name:'Nexus Academy',                           status:'live',     deadline:null, url:'https://nexus-network-seven.vercel.app',
-    note:{ date:'May 17, 2026', text:'The website has been designed and deployed based on the requirements. It shows the proposed solution. We will complete the remaining work once the project is approved.' }},
-
-  { id:'ai-hallucination',   name:'ECCV 2026 - Hallucinations in Image',                 status:'research', deadline:'Submitted - ECCV 2026',
-    note:{ date:'May 14, 2026', text:'Submitted "Beyond Dominant Patches: Spatial Credit Redistribution For Grounded Vision-Language Models" to ECCV 2026 (A* Conference). The work helps AI understand images more accurately and reduce cases where it sees things that are not actually there. Awaiting review results.' }},
-
-  /* ── Upcoming / Pending ─────────────────────── */
   { id:'adcomm-genai',       name:'AI Tool for Traceability & Efficiency', status:'upcoming', deadline:'Decision: Not taken yet', client:'Creative Design · Adcomm Limited',
     note:{ date:'Jun 3, 2026',  text:'A meeting was held at the CT office to discuss how an in-house AI tool could improve team efficiency through data traceability and model training. No decision has been made yet. We will discuss the next steps with the CT Marketing team.' }},
 
-  { id:'belk-ai-audit',      name:'AI Auditing Tool',                        status:'upcoming', deadline:'Pending project approval', client:'BELK',
-    note:{ date:'Jun 3, 2026',  text:'During the testing phase, we developed shear garment and tattoo detection features. There are still several discussions and requirement clarifications pending. We will move forward once the project is approved.' }},
+  { id:'agentic-ai',         name:'Agentic AI Platform',                     status:'active',   deadline:'Jul 15, 2026',
+    note:{ date:'Jun 3, 2026',  text:'Website will be designed and hosted at rayyanmustaqbil.xyz. Clients will use the site to contact us for building AI agents and agentic AI workflows for their business.' }},
+
+  { id:'nexus-academy',      name:'Nexus Academy',                           status:'live',     deadline:null, url:'https://nexus-network-seven.vercel.app',
+    note:{ date:'May 17, 2026', text:'The website has been designed and deployed based on the requirements. It shows the proposed solution. We will complete the remaining work once the project is approved.' }},
+
+  { id:'linkedin-auto',      name:'LinkedIn Content Scheduler',              status:'upcoming', deadline:null,
+    note:{ date:'May 12, 2026', text:'A platform where users configure and share their ideas: frequency, timing, and other parameters. The system will automatically post to LinkedIn while keeping a human in the loop for verification before publishing.' }},
+
+  { id:'city-bank-vapt',     name:'City Bank - VAPT',                        status:'security', deadline:'Internal deadline: Jun 15, 2026',
+    note:{ date:'Jun 2, 2026',  text:'The CT Marketing team is preparing presentation for City Bank. We have completed our technical findings, and the current focus is on presenting them clearly. Technical implementation will begin once the project is approved.' }},
+
+  /* ── Active & upcoming (middle) ─────────────── */
+  { id:'mutual-trust-vapt',  name:'Mutual Trust Bank - VAPT',                status:'upcoming', deadline:'Accounts by Jun 4, 2026',
+    note:{ date:'Jun 1, 2026',  text:'The CT Marketing team will provide two bank accounts for VAPT. Once the accounts are received, we will start working on the project.' }},
+
+  { id:'ktm-hrms',           name:'KTM - HR Leave Management System',        status:'live',     deadline:'Full go-live: Jul 1, 2026',
+    note:{ date:'May 24, 2026', text:'The Leave Management Module has already been deployed for management. By Jun 10, all production teams will be trained by the Tech and HR teams. From Jul 1, 2026, it will be used across the whole office.' }},
+
+  { id:'ktm-attendance',     name:'KTM - HR Attendance Management System',   status:'upcoming', deadline:'Jul 10, 2026',
+    note:{ date:'May 24, 2026', text:'Biometric devices will be integrated with KTM. Employees will be able to track their average daily working hours and total monthly working hours. Due to limited resources, this feature will be released after the leave application feature.' }},
 
   { id:'ai-content-detector',name:'AI Content Detector',                     status:'upcoming', deadline:'Next action: Unknown', client:'CID',
     note:{ date:'Apr 21, 2026', text:'Presented to CID. They showed interest in the project. However, there has been a pause since then and we have not been updated on the next course of action.' }},
 
   { id:'aamrataka',          name:'aamartaka.com',                            status:'upcoming', deadline:'Next course of action: Not fixed',
     note:{ date:'May 14, 2026', text:'The last meeting was held on May 14, 2026. We took over the project from the previous development team and decided to redevelop the system due to various technical, operational, and strategic issues. The next meeting and action plan have not yet been scheduled.' }},
-
-  { id:'linkedin-auto',      name:'LinkedIn Content Scheduler',              status:'upcoming', deadline:null,
-    note:{ date:'May 12, 2026', text:'A platform where users configure and share their ideas: frequency, timing, and other parameters. The system will automatically post to LinkedIn while keeping a human in the loop for verification before publishing.' }},
 
   { id:'cybertriad',         name:'thecybertriad.com',                       status:'upcoming', deadline:'No release date yet',
     note:{ date:'May 12, 2026', text:'Official site for The CyberTriad. Development will begin once all content and basic information required to start are received. No release date set yet.' }},
@@ -462,6 +440,19 @@ const PROJECTS = [
 
   { id:'evercare',           name:'Evercare',                                 status:'upcoming', deadline:'No meeting scheduled',
     note:{ date:'May 12, 2026', text:'This hospital has critical security vulnerabilities. If sensitive patient data is exposed, it could cause serious reputational damage and loss of public trust.' }},
+
+  /* ── Research (last) ──────────────────────────── */
+  { id:'vlm-ood-paper',      name:'ECCV 2026 - VLM OOD Generalization',                  status:'research', deadline:'Notification: Jun 19, 2026',
+    note:{ date:'May 14, 2026', text:'Submitted "Step-Level Visual Grounding Faithfulness Predicts Out-of-Distribution Generalization in Long-Horizon Vision-Language Models" to ECCV 2026 (A* Conference). Awaiting review results.' }},
+
+  { id:'emnlp-2026',         name:'EMNLP 2026 - AI Safety & Security',       status:'research', deadline:'Review notification: Jul 9, 2026',
+    note:{ date:'May 14, 2026', text:'A fundamental research paper on AI safety and security has been submitted to the EMNLP (A*) Conference. Paper: "Long Thoughts, Short Refusals: Math-Encoded Jailbreaks on Reasoning-Model Sibling Pairs".' }},
+
+  { id:'ai-hallucination',   name:'ECCV 2026 - Hallucinations in Image',                 status:'research', deadline:'Submitted - ECCV 2026',
+    note:{ date:'May 14, 2026', text:'Submitted "Beyond Dominant Patches: Spatial Credit Redistribution For Grounded Vision-Language Models" to ECCV 2026 (A* Conference). The work helps AI understand images more accurately and reduce cases where it sees things that are not actually there. Awaiting review results.' }},
+
+  { id:'icdar-2026',         name:'ICDAR 2026 - Diagram Hallucinations',     status:'research', deadline:'Aug 30 - Sep 2, 2026 · Vienna, Austria',
+    note:{ date:'May 14, 2026', text:'We will present "Stroke-Level Connectivity Verification: Grounding Vision-Language Models Against Topology Hallucination in Diagram Understanding" at ICDAR 2026 in Vienna, Austria. Currently refining the paper and preparing the presentation.' }},
 ];
 
 /* ═══════════════════════════════════════════════

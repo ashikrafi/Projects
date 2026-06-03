@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ashikur Rahman - Live Dashboard</title>
+  <title>Ashikur's Live Work Updates</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -414,6 +414,148 @@
       .tab-btn { padding: 8px 12px 10px; font-size: 12.5px; }
       .tabs-bar { margin-bottom: 22px; }
     }
+
+    /* ═══════════════════════════════════════
+       ANIMATIONS
+    ═══════════════════════════════════════ */
+
+    /* Keyframes */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(.94); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes slideRight {
+      from { opacity: 0; transform: translateX(-14px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes gradientShift {
+      0%,100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+
+    /* Header entrance */
+    header {
+      animation: fadeIn .5s ease both;
+    }
+
+    /* Hero entrance — staggered children */
+    .hero-wrap {
+      animation: scaleIn .6s cubic-bezier(.16,1,.3,1) .1s both;
+    }
+    .hero-id {
+      animation: fadeUp .55s cubic-bezier(.16,1,.3,1) .25s both;
+    }
+    .hero-tagline {
+      animation: fadeUp .5s cubic-bezier(.16,1,.3,1) .38s both;
+    }
+    .hero-divider-thin {
+      animation: fadeIn .4s ease .5s both;
+    }
+    .hero-para {
+      animation: fadeUp .5s cubic-bezier(.16,1,.3,1) .52s both;
+    }
+
+    /* Gradient name shimmer */
+    .hero-name {
+      background-size: 200% 200%;
+      animation: gradientShift 6s ease infinite;
+    }
+
+    /* Notice banner */
+    .notice-banner {
+      animation: fadeUp .5s cubic-bezier(.16,1,.3,1) .62s both;
+    }
+
+    /* Tab bar */
+    .tabs-bar {
+      animation: fadeIn .4s ease .7s both;
+    }
+
+    /* Scroll-driven card reveal */
+    .proj-card,
+    .upd-card,
+    .date-group {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1);
+    }
+    .proj-card.visible,
+    .upd-card.visible,
+    .date-group.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Card hover — lift + border glow */
+    .proj-card {
+      transition:
+        opacity .45s cubic-bezier(.16,1,.3,1),
+        transform .45s cubic-bezier(.16,1,.3,1),
+        box-shadow .28s ease,
+        border-color .28s ease,
+        translate .28s ease;
+    }
+    .proj-card.visible:hover {
+      translate: 0 -3px;
+    }
+
+    /* Update card hover */
+    .upd-card {
+      transition:
+        opacity .45s cubic-bezier(.16,1,.3,1),
+        transform .45s cubic-bezier(.16,1,.3,1),
+        border-color .28s ease,
+        translate .28s ease;
+    }
+    .upd-card.visible:hover {
+      translate: 0 -2px;
+    }
+
+    /* Tab switch — content fade */
+    .tab-panel.active {
+      animation: fadeUp .35s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    /* Avatar ring subtle rotate on hover */
+    .hero-avatar-ring {
+      transition: box-shadow .35s ease, transform .35s ease;
+    }
+    .hero-avatar-ring:hover {
+      transform: scale(1.04) rotate(2deg);
+    }
+
+    /* Tab button hover underline slide */
+    .tab-btn::before {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 50%; right: 50%;
+      height: 2px;
+      background: var(--tx3);
+      border-radius: 2px 2px 0 0;
+      transition: left .22s ease, right .22s ease;
+    }
+    .tab-btn:not(.active):hover::before {
+      left: 0; right: 0;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+      .proj-card, .upd-card, .date-group {
+        opacity: 1; transform: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -660,9 +802,31 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    const panel = document.getElementById('tab-' + btn.dataset.tab);
+    panel.classList.add('active');
+    /* re-trigger scroll observer for newly visible panel */
+    panel.querySelectorAll('.proj-card,.upd-card,.date-group').forEach(el => {
+      el.classList.remove('visible');
+      observer.observe(el);
+    });
   });
 });
+
+/* scroll-reveal observer */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      /* stagger siblings in the same grid row */
+      const siblings = [...(entry.target.parentElement?.children || [])];
+      const idx = siblings.indexOf(entry.target);
+      entry.target.style.transitionDelay = (idx % 3) * 60 + 'ms';
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+
+document.querySelectorAll('.proj-card, .upd-card, .date-group').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>

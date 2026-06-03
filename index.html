@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ashikur Rahman - Live Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,12 +34,38 @@
       --ease: 0.22s cubic-bezier(.4,0,.2,1);
     }
 
-    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
 
     body {
       background: var(--bg); color: var(--tx1);
       font-family: var(--sans); font-size: 16px; line-height: 1.65;
-      overflow-x: hidden; min-height: 100vh;
+    }
+
+    .page-root {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    .page-scroll {
+      flex: 1;
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
+      touch-action: pan-y;
     }
 
     a { text-decoration: none; color: inherit; }
@@ -50,7 +76,9 @@
 
     /* ── HEADER ── */
     header {
-      position: sticky; top: 0; z-index: 100;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 100;
       background: rgba(13,13,13,.94);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--br);
@@ -58,7 +86,9 @@
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
     .h-left { display: flex; align-items: center; gap: 12px; }
-    .h-logo  { height: 22px; opacity: .88; }
+    .h-logo-link { display: inline-flex; cursor: pointer; line-height: 0; border-radius: 4px; }
+    .h-logo-link:hover .h-logo { opacity: 1; }
+    .h-logo  { height: 22px; opacity: .88; transition: opacity var(--ease); }
     .h-badge {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
@@ -70,7 +100,12 @@
     .h-date { font-size: 12px; color: var(--tx3); white-space: nowrap; }
 
     /* ── LAYOUT ── */
-    .main { max-width: 1120px; margin: 0 auto; padding: 36px 18px 88px; display: flex; flex-direction: column; gap: 48px; }
+    .main {
+      max-width: 1120px; margin: 0 auto;
+      padding: 36px 18px 88px;
+      display: flex; flex-direction: column; gap: 48px;
+      overflow: visible;
+    }
 
     /* ── HERO ── */
     .hero-wrap {
@@ -177,18 +212,32 @@
     }
     .hero-para .em { color: var(--ac-tl); font-weight: 600; }
     /* ── TABS ── */
-    .tabs-wrapper { display: flex; flex-direction: column; gap: 0; }
+    .tabs-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      overflow: visible;
+    }
 
     .tabs-bar {
-      display: flex; align-items: center; gap: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
       border-bottom: 1px solid var(--br);
-      padding-bottom: 0; margin-bottom: 28px;
-      position: sticky; top: 55px; z-index: 90;
-      background: #0D0D0D;
       border-top: 1px solid var(--br);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      margin-left: -18px; margin-right: -18px;
-      padding-left: 18px; padding-right: 18px;
+      padding-bottom: 0;
+      margin-bottom: 28px;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: rgba(13,13,13,.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      margin-left: -18px;
+      margin-right: -18px;
+      padding-left: 18px;
+      padding-right: 18px;
+      box-shadow: 0 6px 20px rgba(0,0,0,.35);
     }
     .tab-btn {
       position: relative;
@@ -284,10 +333,12 @@
       border-radius: 10px; font-size: 12.5px; color: var(--tx2); line-height: 1.65;
     }
     .pc-update-label {
-      display: flex; align-items: center; gap: 5px; margin-bottom: 5px;
+      display: flex; align-items: center; gap: 6px; margin-bottom: 5px;
       font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--tx3);
     }
-    .pc-update-label::before { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--tx3); }
+    .pc-update-label::before { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--tx3); flex-shrink: 0; }
+    .pc-update-posted { color: var(--tx3); }
+    .pc-update-when { color: var(--tx2); text-transform: none; letter-spacing: .02em; font-weight: 600; }
 
     /* ── UPDATES FEED ── */
     .updates-feed { display: flex; flex-direction: column; gap: 28px; }
@@ -302,6 +353,8 @@
       letter-spacing: .06em; text-transform: uppercase; color: var(--tx3);
       white-space: nowrap;
     }
+    .date-label-posted { color: var(--tx3); margin-right: 2px; }
+    .date-label-when { color: var(--tx2); }
     .date-line { flex: 1; height: 1px; background: var(--br); }
 
     .date-entries { display: flex; flex-direction: column; gap: 8px; padding-left: 0; }
@@ -365,17 +418,23 @@
 </head>
 <body>
 
-<header>
-  <div class="h-left">
-    <img src="company-logo/THE-KOW-COMPANY_White 1.png" alt="The KOW Company" class="h-logo">
-  </div>
-  <div style="display:flex;align-items:center;gap:12px">
-    <div class="h-badge"><span class="h-dot"></span>Internal</div>
-    <div class="h-date" id="todayDate"></div>
-  </div>
-</header>
+<div class="page-root">
+  <header>
+    <div class="h-left">
+      <a href="#" class="h-logo-link" aria-label="Reload dashboard" onclick="event.preventDefault();location.reload();">
+        <img src="company-logo/THE-KOW-COMPANY_White 1.png" alt="The KOW Company" class="h-logo">
+      </a>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="h-badge"><span class="h-dot"></span>Internal</div>
+      <div class="h-date" id="todayDate"></div>
+    </div>
+  </header>
 
-<div class="main" id="app"></div>
+  <div class="page-scroll">
+    <div class="main" id="app"></div>
+  </div>
+</div>
 
 <script>
 /* ═══════════════════════════════════════════════
@@ -386,17 +445,17 @@
 const PROJECTS = [
 
   /* ── Priority (top) ─────────────────────────── */
-  { id:'sierra-leone-kms',   name:'Sierra Leone KMS',                        status:'upcoming', deadline:'Meeting: Jul 4, 2026',
+  { id:'sierra-leone-kms',   name:'Sierra Leone KMS',                        status:'upcoming', deadline:'Meeting: Jun 4, 2026',
     note:{ date:'Jun 3, 2026',  text:'We have developed a mock website based on the documented requirements. We will present it to the CT Marketing team and ask them to verify whether any requirements have been missed. The goal is to engage stakeholders early, showcase our capabilities, and increase our chances of securing the project.' }},
 
   { id:'multimodal-llm',     name:'Multimodal LLM Development',              status:'active',   deadline:'Roadmap Demo: Jun 24, 2026',
     note:{ date:'Jun 3, 2026',  text:'A roadmap demonstration is scheduled for June 24, 2026. As discussed in the last meeting, we plan to develop and train our own LLM to support multiple platforms. So, we will present the entire roadmap, from planning to execution.' }},
 
   { id:'virtual-tryon',      name:'Virtual Try-On',                          status:'active',   deadline:'First Release: Jul 9, 2026',
-    note:{ date:'Jun 2, 2026',  text:'Based on a sample of 1,070 websites, the crawler works on around 50-60% of e-commerce sites. Some major brands, such as Adidas, are not supported yet, but we will address them in Phase-2. For now, our focus is on launching Phase 1 with the full end-to-end process.' }},
+    note:{ date:'Jun 2, 2026',  text:'Based on a sample of 1,070 websites, the crawler currently works on approximately 50–60% of e-commerce sites. Some major brands, such as Adidas, are not yet supported, but these will be addressed in Phase 2. For now, our focus is on launching Phase 1 with a complete end-to-end workflow and making the platform live.' }},
 
   { id:'belk-ai-audit',      name:'AI Auditing Tool',                        status:'upcoming', deadline:'Pending project approval', client:'BELK',
-    note:{ date:'Jun 3, 2026',  text:'During the testing phase, we developed shear garment and tattoo detection features. There are still several discussions and requirement clarifications pending. We will move forward once the project is approved.' }},
+    note:{ date:'Jun 3, 2026',  text:'During the testing phase, we developed sheer garment and tattoo detection features. There are still several discussions and requirement clarifications pending. We will move forward once the project is approved.' }},
 
   { id:'omnimage',           name:'omnimage.ai',                             status:'active',   deadline:'Demo: Jun 8-10, 2026',
     note:{ date:'Jun 3, 2026',  text:'Demo scheduled for Jun 8-10. We will present the image-to-video generation process. If TKCL MT approves, we will deploy it live.' }},
@@ -438,12 +497,12 @@ const PROJECTS = [
   { id:'popular-diagnostic', name:'Popular Diagnostic Centre Ltd.',           status:'upcoming', deadline:'No meeting scheduled',
     note:{ date:'May 12, 2026', text:'Based on our findings, they do not seem to take data security seriously, which leaves sensitive information at huge risk.' }},
 
-  { id:'evercare',           name:'Evercare',                                 status:'upcoming', deadline:'No meeting scheduled',
+  { id:'evercare',           name:'Evercare Hospital',                        status:'upcoming', deadline:'No meeting scheduled',
     note:{ date:'May 12, 2026', text:'This hospital has critical security vulnerabilities. If sensitive patient data is exposed, it could cause serious reputational damage and loss of public trust.' }},
 
   /* ── Research (last) ──────────────────────────── */
   { id:'vlm-ood-paper',      name:'ECCV 2026 - VLM OOD Generalization',                  status:'research', deadline:'Notification: Jun 19, 2026',
-    note:{ date:'May 14, 2026', text:'Submitted "Step-Level Visual Grounding Faithfulness Predicts Out-of-Distribution Generalization in Long-Horizon Vision-Language Models" to ECCV 2026 (A* Conference). Awaiting review results.' }},
+    note:{ date:'May 14, 2026', text:'Submitted research paper: "Step-Level Visual Grounding Faithfulness Predicts Out-of-Distribution Generalization in Long-Horizon Vision-Language Models" to ECCV 2026 (A* Conference). Awaiting review results.' }},
 
   { id:'emnlp-2026',         name:'EMNLP 2026 - AI Safety & Security',       status:'research', deadline:'Review notification: Jul 9, 2026',
     note:{ date:'May 14, 2026', text:'A fundamental research paper on AI safety and security has been submitted to the EMNLP (A*) Conference. Paper: "Long Thoughts, Short Refusals: Math-Encoded Jailbreaks on Reasoning-Model Sibling Pairs". Awaiting review results.' }},
@@ -486,7 +545,7 @@ function card(p, idx) {
       ${p.url ? `<a href="${p.url}" target="_blank" class="pc-url">${p.url.replace(/https?:\/\//,'')}</a>` : ''}
       ${p.note ? `
         <div class="pc-update-box">
-          <div class="pc-update-label">${p.note.date}</div>
+          <div class="pc-update-label"><span class="pc-update-posted">Posted</span><span class="pc-update-when">${p.note.date}</span></div>
           ${p.note.text}
         </div>` : ''}
     </div>`;
@@ -522,7 +581,7 @@ function buildUpdateFeed() {
     return `
       <div class="date-group">
         <div class="date-heading">
-          <div class="date-label">${date}</div>
+          <div class="date-label"><span class="date-label-posted">Posted</span><span class="date-label-when">${date}</span></div>
           <div class="date-line"></div>
         </div>
         <div class="date-entries">${cards}</div>

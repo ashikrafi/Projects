@@ -838,10 +838,11 @@ const PROJECTS = [
 /* ═══════════════════════════════════════════════
    QUICK UPDATES — fully independent feed
    No link to PROJECTS required.
-   { date, tag (optional label), text, url (optional link) }
+   { date, tag (optional label), text, url (optional link), urlLabel (optional link text) }
    Add anything here — project-related or not.
 ═══════════════════════════════════════════════ */
 const UPDATES = [
+  { date:'Jun 5, 2026', tag:'Vestiaire Collective', text:'Prepared a workflow report for Vestiaire Collective ahead of ShopTalk.', url:'Reports/vestiaire-workflow-report.pdf', urlLabel:'Vestiaire workflow report (PDF)' },
   { date:'Jun 4, 2026', tag:'Sierra Leone KMS',      text:'Presented the Sierra Leone KMS site to the entire CT team today. Next course of action: they will validate the site against the documented requirements and report back to us on Jun 8, 2026.', url:'https://kms-front-end.vercel.app/' },
   { date:'Jun 3, 2026', tag:'Sierra Leone KMS',      text:'We have developed a mock website based on the documented requirements. We will present it to the CT Marketing team on Jun 4 and ask them to verify whether any requirements have been missed. The goal is to engage stakeholders early, showcase our capabilities, and increase our chances of securing the project.' },
   { date:'Jun 3, 2026', tag:'Mutual Trust Bank - VAPT', text:'The CT Marketing team will provide two bank accounts for VAPT. Once the accounts are received, we will start working on the project.' },
@@ -897,7 +898,7 @@ function buildUpdateFeed() {
             ${u.tag ? `<span class="upd-proj-chip b-upcoming">${u.tag}</span>` : ''}
           </div>
           <div class="upd-text">${u.text}</div>
-          ${u.url ? `<a href="${u.url}" target="_blank" rel="noopener noreferrer" class="upd-url">${u.url}</a>` : ''}
+          ${u.url ? `<a href="${u.url}" target="_blank" rel="noopener noreferrer" class="upd-url">${u.urlLabel || u.url}</a>` : ''}
         </div>`;
     }).join('');
 
